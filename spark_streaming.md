@@ -1,13 +1,15 @@
 Running spark streaming job on a kubernetes cluster
 ===================================================
-Simple example of running a spark streaming job on Docker Desktop (Kubernetes).  
+Simple example of running a spark streaming job on Docker Desktop (Kubernetes).
+
 Working Example Steps - Word Count Example 
 ------------------------------------------
 ### Start the netcat container and headless service
-See [](netcat_test_server.md)
+See [Netcat Test Server in Kubernetes](netcat_test_server.md)
 
 ### Run the word-count example job
 Submit the job.
+
 ```
 ./bin/spark-submit      
   --master k8s://https://kubernetes.docker.internal:6443      
@@ -19,6 +21,8 @@ Submit the job.
   --conf spark.kubernetes.container.image=spark:latest      
   local:///opt/spark/examples/jars/spark-examples_2.11-2.4.4.jar nc-pod-svc 9999
   ```
+
+Notice program arguments are specified after the jar path.  nc-pod-svc refers to the DNS entry created by the headless service, 9999 to the port at which the netcat server is listening.
 
 ### Attach to the netcat server and enter words.
 ```
@@ -103,10 +107,7 @@ Time: 1578258306000 ms
 (one,4)
 ```
 
-Concerns
---------
-### Passing args to spark main function
-Add following the classname.
+
 
 Reference
 ---------
